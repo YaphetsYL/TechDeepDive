@@ -14,7 +14,7 @@
 
 ### Initial Version
 
-These rules consolidates programming practices from code review sessions. Some of the rules referred from Alibaba Java Coding Guidelines. 
+These rules consolidates programming practices from code review sessions. Some of the rules are referred from Alibaba Java Coding Guidelines. 
 
 ## <font color="green">1. Programming Specification</font>
 
@@ -141,7 +141,7 @@ import lombok.extern.slf4j.Slf4j;
 
 2\. **[For Reference]** Duff's device 
 ```java
-
+//todo
 ```
 
 3\. **[Mandatory]** Logs at *TRACE / DEBUG / INFO* levels must use either conditional outputs or placeholders.
@@ -163,3 +163,6 @@ logger.debug("Processing trade with id: " + id + " symbol: " + symbol);
 ```
 
 ## <font color="green">3. Aerospike Rules</font>
+```java
+//todo
+```
