@@ -3,13 +3,12 @@ package com.dbs.ce.gapi.deletenode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Lei
  * @version 1.0
  * @date 2021/7/14 - 07 - 14 - 1:10
- * @Description com.dbs.ce.gapi.deletenode
  */
 @Slf4j
 class LinkedListTest {
