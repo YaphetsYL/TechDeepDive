@@ -4,6 +4,8 @@ import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
@@ -33,98 +35,34 @@ class GuavaBloomFilterTest {
     }
 
     /*
-     for 1 million insertions, 0.01 false positive probability
-     bitmap is 9585058
-    */
-    @Test
-    void TestGuavaBloomFilter1() {
-        BloomFilter<CharSequence> filter = BloomFilter.create(
-                Funnels.stringFunnel(StandardCharsets.UTF_8),
-                1_000_000,
-                0.01);
-
-        for (int i = 0; i < 1_000_000; i++) {
-            filter.put(UUID.randomUUID().toString());
-        }
-
-        int exist = 0;
-        int notExist = 0;
-        for (int i = 0; i < 1_000_000; i++) {
-            if (filter.mightContain(UUID.randomUUID().toString())) {
-                exist++;
-            } else {
-                notExist++;
-            }
-        }
-
-        log.info("exist: " + exist);
-        log.info("not exist: " + notExist);
-        //sometimes more than 10000 record exists
-        assertTrue(10000 >= exist);
-
-    }
-
-    /*
-    for 1 million insertions, 0.0001 false positive probability
-    bitmap is 19170116
+     for 1 million insertions:
+     0.01 false positive probability --> bitmap is 9585058
+     0.0001 false positive probability --> bitmap is 19170116
+     0.000001 false positive probability --> bitmap is 28755175
    */
-    @Test
-    void TestGuavaBloomFilter2() {
+
+    @ParameterizedTest
+    @ValueSource(doubles = {0.01, 0.0001, 0.000001})
+    void TestGuavaBloomFilter4(double fpp) {
         BloomFilter<CharSequence> filter = BloomFilter.create(
                 Funnels.stringFunnel(StandardCharsets.UTF_8),
                 1_000_000,
-                0.0001);
+                fpp);
 
         for (int i = 0; i < 1_000_000; i++) {
             filter.put(UUID.randomUUID().toString());
         }
 
-        int exist = 0;
-        int notExist = 0;
+        int falsePositive = 0;
         for (int i = 0; i < 1_000_000; i++) {
             if (filter.mightContain(UUID.randomUUID().toString())) {
-                exist++;
-            } else {
-                notExist++;
+                falsePositive++;
             }
         }
 
-        log.info("exist: " + exist);
-        log.info("not exist: " + notExist);
-        //sometimes more than 100 record exists
-        assertTrue(100 >= exist);
-
-    }
-
-    /*
-    for 1 million insertions, 0.000001 false positive probability
-    bitmap is 28755175
-   */
-    @Test
-    void TestGuavaBloomFilter3() {
-        BloomFilter<CharSequence> filter = BloomFilter.create(
-                Funnels.stringFunnel(StandardCharsets.UTF_8),
-                1_000_000,
-                0.000001);
-
-        for (int i = 0; i < 1_000_000; i++) {
-            filter.put(UUID.randomUUID().toString());
-        }
-
-        int exist = 0;
-        int notExist = 0;
-        for (int i = 0; i < 1_000_000; i++) {
-            if (filter.mightContain(UUID.randomUUID().toString())) {
-                exist++;
-            } else {
-                notExist++;
-            }
-        }
-
-        log.info("exist: " + exist);
-        log.info("not exist: " + notExist);
-        //sometimes more than 1 record exists
-        assertTrue(2 >= exist);
+        log.info("No of records actually not exists but reported: " + falsePositive);
+        //sometimes more records reported
+        assertTrue((1000000 * fpp) >= falsePositive);
 
     }
 
