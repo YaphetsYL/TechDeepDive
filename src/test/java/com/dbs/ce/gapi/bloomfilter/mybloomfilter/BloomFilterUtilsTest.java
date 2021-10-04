@@ -26,12 +26,12 @@ class BloomFilterUtilsTest {
         }
         log.info("count: " + count);
         log.info("insert percentage: " + count + "%");
-        assertTrue(80 <= count);
+        assertTrue(70 <= count);
     }
 
     @Test
     void testMyBloomFilter2() {
-        boolean[] bitArray = new boolean[2560];
+        boolean[] bitArray = new boolean[480];
         int count = 0;
         for (int i = 0; i < 100; i++) {
             if (BloomFilterUtils.insert(bitArray, UUID.randomUUID().toString())) {
@@ -40,7 +40,7 @@ class BloomFilterUtilsTest {
         }
         log.info("count: " + count);
         log.info("insert percentage: " + count + "%");
-        assertTrue(98 <= count);
+        assertTrue(90 <= count);
     }
 
 
