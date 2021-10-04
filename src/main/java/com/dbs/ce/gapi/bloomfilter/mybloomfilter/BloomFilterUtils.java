@@ -75,11 +75,13 @@ class BloomFilterUtils {
     /**
      * @param bitArray: bit array
      * @param s:        string
+     * @return boolean: false when insert fail; true when insert successfully
      */
-    static void insert(boolean[] bitArray, String s) {
+    static boolean insert(boolean[] bitArray, String s) {
         // check if the element exists
         if (lookup(bitArray, s)) {
             log.info(s + " is Probably already present");
+            return false;
         } else {
             int a = h1(s, bitArray.length);
             int b = h2(s, bitArray.length);
@@ -89,6 +91,8 @@ class BloomFilterUtils {
             bitArray[b] = true;
             bitArray[c] = true;
             log.info(s + " has been inserted");
+
+            return true;
         }
     }
 
