@@ -1,6 +1,7 @@
 package com.dbs.ce.gapi.bloomfilter.hadoop;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hadoop.util.bloom.CountingBloomFilter;
 import org.apache.hadoop.util.bloom.Key;
 
 /**
@@ -9,12 +10,12 @@ import org.apache.hadoop.util.bloom.Key;
  * @date 2021/10/5 - 10 - 05 - 12:04
  */
 @Slf4j
-public class CountingBloomFilter {
+public class CountingBF {
     public static void main(String[] args) {
         String[] strings = {"Lei", "CheeSing", "Mike", "Jagath", "ZhouRui", "Sidd", "Mridul"};
 
         log.info("------Counting Bloom Filter ------");
-        org.apache.hadoop.util.bloom.CountingBloomFilter countingBloomFilter = new org.apache.hadoop.util.bloom.CountingBloomFilter(256, 3, 1);
+        CountingBloomFilter countingBloomFilter = new CountingBloomFilter(256, 3, 1);
         for (String string : strings) {
             Key key = new Key(string.getBytes());
             countingBloomFilter.add(key);
