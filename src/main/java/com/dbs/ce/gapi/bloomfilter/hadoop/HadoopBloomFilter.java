@@ -3,7 +3,6 @@ package com.dbs.ce.gapi.bloomfilter.hadoop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.util.bloom.BloomFilter;
-import org.apache.hadoop.util.bloom.CountingBloomFilter;
 import org.apache.hadoop.util.bloom.Key;
 
 /**
@@ -28,27 +27,6 @@ public class HadoopBloomFilter {
         for (String string : strings) {
             Key key = new Key(string.getBytes());
             log.info(string + " is in the bloom filter: " + bloomFilter.membershipTest(key));
-        }
-
-        log.info("------Counting Bloom Filter ------");
-        CountingBloomFilter countingBloomFilter = new CountingBloomFilter(256, 3, 1);
-        for (String string : strings) {
-            Key key = new Key(string.getBytes());
-            countingBloomFilter.add(key);
-        }
-
-        for (String string : strings) {
-            Key key = new Key(string.getBytes());
-            log.info(string + " is in the counting bloom filter: " + countingBloomFilter.membershipTest(key));
-        }
-
-        Key leiKey = new Key("Lei".getBytes());
-        countingBloomFilter.delete(leiKey);
-
-        log.info("------after delete one key ------");
-        for (String string : strings) {
-            Key key = new Key(string.getBytes());
-            log.info(string + " is in the counting bloom filter: " + countingBloomFilter.membershipTest(key));
         }
 
 
