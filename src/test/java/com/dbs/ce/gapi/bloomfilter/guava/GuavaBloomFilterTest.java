@@ -60,7 +60,7 @@ class GuavaBloomFilterTest {
             }
         }
 
-        log.info("No of records actually not exists but reported: " + falsePositive);
+        log.info("No of false positive: " + falsePositive);
         //sometimes more records reported
         assertTrue((1000000 * fpp) >= falsePositive);
 

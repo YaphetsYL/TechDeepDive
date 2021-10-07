@@ -24,7 +24,7 @@ class BloomFilterUtilsTest {
                 count++;
             }
         }
-        log.info("count: " + count);
+        log.info("No of insertions: " + count);
         log.info("insert percentage: " + count + "%");
         assertTrue(70 <= count);
     }
@@ -38,7 +38,7 @@ class BloomFilterUtilsTest {
                 count++;
             }
         }
-        log.info("count: " + count);
+        log.info("No of insertions: " + count);
         log.info("insert percentage: " + count + "%");
         assertTrue(90 <= count);
     }
